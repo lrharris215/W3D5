@@ -1,3 +1,5 @@
+require "byebug"
+
 class PolyTreeNode
 
     def initialize(value)
@@ -19,18 +21,17 @@ class PolyTreeNode
     end
 
     def parent=(new_parent)
-        old_parent = @parent
+        @parent.children.delete(self) unless parent == nil
         @parent = new_parent
-        unless @parent == nil
-            @parent.add_child(self) 
+        unless @parent == nil || @parent.children.include?(self)
+            @parent.children << self 
         end
-        old_parent.remove_child(self) unless old_parent == nil
     end
 
     def add_child(new_child)
        unless @children.include?(new_child)
-        @children << new_child 
-        new_child.parent = self
+            @children << new_child 
+            new_child.parent = self
        end
     end
 
