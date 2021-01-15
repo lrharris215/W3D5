@@ -3,6 +3,7 @@ require "./00_tree_node"
 class KnightPathFinder
 
     def initialize(pos)
+        raise "Not a valid position" unless KnightPathFinder.valid_position(pos)
         @starting_pos = pos
         @root = PolyTreeNode.new(pos)
     
