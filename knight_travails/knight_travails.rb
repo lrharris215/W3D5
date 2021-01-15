@@ -1,4 +1,4 @@
-require "00_tree_node"
+require "./00_tree_node"
 
 class KnightPathFinder
 
@@ -13,13 +13,28 @@ class KnightPathFinder
     end
 
 
-    def valid_position(pos)
+    def self.valid_position(pos)
         row, col = pos
         row.between?(0, 7) && col.between?(0, 7)
     end
 
-    def valid_moves(pos)
-    
+    def self.valid_moves(pos)
+        row, col = pos
+        valid_moves = []
+        (1..2).each do |offset_1|
+            (1..2).each do |offset_2|
+                next if offset_1 == offset_2
+                new_pos = [row + offset_1, col + offset_2]
+                valid_moves << new_pos if KnightPathFinder.valid_position(new_pos)
+                new_pos = [row + offset_1, col - offset_2]
+                valid_moves << new_pos if KnightPathFinder.valid_position(new_pos)
+                new_pos = [row - offset_1, col + offset_2]
+                valid_moves << new_pos if KnightPathFinder.valid_position(new_pos)
+                new_pos = [row - offset_1, col - offset_2]
+                valid_moves << new_pos if KnightPathFinder.valid_position(new_pos)
+            end
+        end
+        valid_moves
     end
 
     def build_move_tree
