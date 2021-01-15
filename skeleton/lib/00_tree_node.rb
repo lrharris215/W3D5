@@ -30,13 +30,14 @@ class PolyTreeNode
 
     def add_child(new_child)
        unless @children.include?(new_child)
-            @children << new_child 
-            new_child.parent = self
+           new_child.parent = self
        end
     end
 
     def remove_child(old_child)
+        raise "Node is not a child" unless @children.include?(old_child)
         children.delete(old_child)
+        old_child.parent = nil
     end
 
 end
